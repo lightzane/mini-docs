@@ -1,2 +1,7 @@
 node_modules
 .DS_Store
+
+# assets copied
+src/assets/*.png
+src/assets/*.svg
+src/assets/*.webp

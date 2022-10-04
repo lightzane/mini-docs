@@ -1,11 +1,14 @@
 import * as fs from 'fs';
 import path from 'path';
+import { marked } from 'marked';
+import { MarkdownContent } from './markdown-content.interface';
 
-const DIR = './docs';
+const DIR = './.docs';
 const MD = '.md';
 const ASSETS = ['.png', '.webp', '.svg'];
+const copyAssetsToPath = './docs';
 const targetFiles: string[] = [];
-const copyAssetsToPath = './src/assets';
+const markedContentList: MarkdownContent[] = [];
 
 function readThroughDir(nextPath: string): void {
 
@@ -34,6 +37,25 @@ function readThroughDir(nextPath: string): void {
 
 }
 
+/**
+ * Read the content and parse it to HTML
+ * @param files The markdown filename with paths
+ */
+function readAndMark(files: string[]): void {
+
+    files.forEach((filepath) => {
+        const file = fs.readFileSync(filepath, { encoding: 'utf-8' });
+        const markdownContent: MarkdownContent = {
+            title: file.split('\n')[0].replace(/^#\s*/, ''),
+            content: marked(file)
+        };
+        markedContentList.push(markdownContent);
+    });
+
+}
+
 readThroughDir(DIR);
 
-console.log(targetFiles);
+readAndMark(targetFiles);
+
+console.log(markedContentList);
