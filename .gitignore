@@ -1,0 +1,10 @@
+node_modules
+.DS_Store
+
+# assets copied
+public/*.png
+public/*.svg
+public/*.webp
+src/assets/*.png
+src/assets/*.svg
+src/assets/*.webp
