@@ -1,14 +1,24 @@
 import * as fs from 'fs';
 import path from 'path';
 import { marked } from 'marked';
-import { MarkdownContent } from './markdown-content.interface';
+import jsYaml from 'js-yaml';
+import { Author, MarkdownDocument, Metadata } from './markdown-document.interface';
 
 const DIR = './.docs';
 const MD = '.md';
 const ASSETS = ['.png', '.webp', '.svg'];
 const copyAssetsToPath = './docs';
 const targetFiles: string[] = [];
-const markedContentList: MarkdownContent[] = [];
+const markedDocumentList: MarkdownDocument[] = [];
+
+type AuthorYaml = { [author: string]: Author; };
+let globalAuthors: AuthorYaml | undefined;
+try {
+    globalAuthors = jsYaml.load(fs.readFileSync(`${DIR}/authors.yml`, { encoding: 'utf-8' })) as AuthorYaml;
+}
+catch (err) {
+    console.warn('authors.yml - not found or contains errors');
+}
 
 function readThroughDir(nextPath: string): void {
 
@@ -38,24 +48,123 @@ function readThroughDir(nextPath: string): void {
 }
 
 /**
- * Read the content and parse it to HTML
+ * Read the content and parse it to HTML.
+ * The output will be stored and pushed in `markedDocumentList`
  * @param files The markdown filename with paths
  */
 function readAndMark(files: string[]): void {
 
-    files.forEach((filepath) => {
-        const file = fs.readFileSync(filepath, { encoding: 'utf-8' });
-        const markdownContent: MarkdownContent = {
-            title: file.split('\n')[0].replace(/^#\s*/, ''),
-            content: marked(file)
+    files.forEach((file) => {
+        const fileContent = fs.readFileSync(file, { encoding: 'utf-8' });
+        const [metadata, updatedFileContent] = extractFrontMatter(fileContent);
+        const markdownDocument: MarkdownDocument = {
+            title: getTitle(updatedFileContent),
+            content: marked(updatedFileContent.replace(/<!-- truncate -->/, '')),
+            overview: marked(getOverviewContent(updatedFileContent)),
+            metadata
         };
-        markedContentList.push(markdownContent);
+        markedDocumentList.push(markdownDocument);
     });
 
+}
+
+/**
+ * Extracts the metadata (front matter) out from the main content
+ * @param markdownContent The entire content of the markdown file
+ * @returns [`metadata`, `updatedMarkdownContent`] 
+ */
+function extractFrontMatter(markdownContent: string): [MarkdownDocument['metadata'] | undefined, string] {
+    const delimeter = '---';
+    const newline = '\r\n';
+    const hasDelimiter = markdownContent.includes('---');
+
+    let start = markdownContent.indexOf(delimeter);
+    let end = markdownContent.lastIndexOf(delimeter);
+
+    start = start >= 0 ? start + delimeter.length + newline.length : 0;
+    end = end >= 0 ? end - 1 : 0;
+
+    const spaceAllowance = hasDelimiter ? start : 0; // to exclude "---" in the updatedMarkdownContent
+
+    const updatedMarkdownContent = markdownContent.substring(end + spaceAllowance);
+
+    let yaml = markdownContent.substring(start, end);
+
+    yaml = yaml.includes('#') ? '' : yaml;
+
+    return [
+        parseYaml(yaml),
+        updatedMarkdownContent
+    ];
+}
+
+/** Parse the yaml into a `metadata` object */
+function parseYaml(yaml: string): Metadata | undefined {
+    let metadata = undefined;
+
+    if (yaml) {
+        metadata = jsYaml.load(yaml) as Metadata;
+    }
+
+    // * Authors
+    if (metadata) {
+        if (metadata.authors) {
+            injectAuthors(metadata.authors);
+        }
+    }
+
+    return metadata;
+}
+
+/** Get the Authors and attach it to the metadata */
+function injectAuthors(authors: Author[]): void {
+    // * Author is Array
+    if (Array.isArray(authors)) {
+        authors.forEach((author, index) => {
+            // string
+            if (typeof author === 'string') {
+                if (globalAuthors && globalAuthors[author]) {
+                    authors[index] = globalAuthors[author];
+                } else {
+                    authors[index] = undefined as any;
+                }
+            }
+            // JSON object
+            else {
+                // nothing to do
+            }
+        });
+    }
+
+    // * Author is a single JSON object
+    else {
+        authors = [authors];
+    }
+}
+
+/** Retrieve the title from the first `#` in the content */
+function getTitle(markdownContent: string): string {
+    const [title] = /#.*/.exec(markdownContent) || ['# Untitled'];
+    return title.replace(/.*#\s*/, '');
+}
+
+/** Gets the summary of the content until truncate is found. Else will return the title */
+function getOverviewContent(markdownContent: string): string {
+
+    let overview = `# ${getTitle(markdownContent)}`;
+
+    const truncateMatches = /<!-- truncate -->/.exec(markdownContent);
+
+    if (markdownContent && truncateMatches?.length) {
+        const truncateIndex = truncateMatches.index;
+        overview = markdownContent.substring(0, truncateIndex);
+    }
+
+    return overview;
 }
 
 readThroughDir(DIR);
 
 readAndMark(targetFiles);
 
-console.log(markedContentList);
+fs.writeFileSync(`./docs/list.js`, `const list = ${JSON.stringify(markedDocumentList, null, 2)}\n`, { encoding: 'utf-8' });

@@ -1,3 +1,8 @@
+---
+published_date: OCT 5 2022 20:00 UTC+8
+tags: [angular, angular-readme]
+---
+
 # Some File
 
 This is coming from September

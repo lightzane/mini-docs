@@ -5,3 +5,6 @@ node_modules
 src/assets/*.png
 src/assets/*.svg
 src/assets/*.webp
+
+# The generated output of markdownDocumentList
+src/output.ts

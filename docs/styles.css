@@ -5,3 +5,40 @@ body {
 img {
     max-width: 100%;
 }
+
+button {
+    border-radius: .2rem;
+    color: #fff;
+    background-color: #3498db;
+    border: none;
+    padding: .5rem 1rem;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
+
+
+/* add styles for the output from `marked` */
+.marked-list {
+    border: 1px solid #ccc;
+    margin-bottom: 1rem;
+    border-radius: .2rem;
+    padding: 1rem;
+    padding-top: 0;
+}
+
+.marked-list pre {
+    overflow-x: auto;
+    border-radius: .2rem;
+}
+
+.marked-list p {
+    line-height: 1.5rem;
+}
+
+.marked-list p > code {
+    background-color: #e8e9ec;
+    padding: .3rem;
+    border-radius: .2rem;
+}

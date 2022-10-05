@@ -1,6 +1,18 @@
 # December 4th
 
-This is the content from 4th December
+Contains some notes on how to highlight the codes.
+
+<!-- truncate -->
+
+## To highlight
+
+`https://highlightjs.org/usage/`
+
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/styles/atom-one-dark.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/highlight.min.js"></script>
+<script>hljs.highlightAll()</script>
+```
 
 **sample.html**
 
