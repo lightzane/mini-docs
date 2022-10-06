@@ -1,5 +1,5 @@
 ---
-published_date: OCT 5 2022 20:00 UTC+8
+published_date: OCT 6 2022 07:36 UTC+8
 tags: [angular, angular-readme]
 ---
 

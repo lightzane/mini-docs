@@ -9,6 +9,13 @@ The **Authors** here is coming from a global `authors.yml`
 
 <!-- truncate -->
 
+**sample.md**
+
+```yaml
+authors: [janedoe, johnsmith]
+tags: [author, global]
+```
+
 **.docs/authors.yml**
 
 ```yml

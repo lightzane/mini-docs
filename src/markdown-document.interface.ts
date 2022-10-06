@@ -4,8 +4,10 @@ export interface MarkdownDocument {
     title: string;
     /** The content to be displayed as preview or summary of a subject */
     overview: string;
-    /** Contains other information such as `authors`, `tags`, `published_date` */
+    /** The yaml front matter which contains other information such as `authors`, `tags`, `published_date` */
     metadata?: Metadata;
+    /** The remaining content without the `overview` content */
+    truncatedContent: string;
 }
 
 /** The Yaml front matter in the markdown */

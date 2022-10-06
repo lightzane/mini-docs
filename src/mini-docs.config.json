@@ -1,0 +1,7 @@
+{
+    "docs": ".docs",
+    "assets": [
+        ".webp"
+    ],
+    "public": "docs"
+}

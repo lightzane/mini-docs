@@ -1,0 +1,4 @@
+{
+  "watch": ["src", ".docs"],
+  "ext": "ts, json, md, svg, png, webp, yml"
+}

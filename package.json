@@ -4,7 +4,7 @@
   "description": "This is to get and prepare all markdown files for web",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node src/main.ts"
+    "start": "nodemon src/main.ts"
   },
   "keywords": [],
   "author": "",

@@ -4,7 +4,7 @@ authors:
     title: Software Engineer
   - name: Jane Doe
     title: Software Engineer
-date: OCT 5 2022 09:35 UTC+8
+published_date: OCT 5 2022 09:35 UTC+8
 tags: [author, multiple, inline]
 ---
 

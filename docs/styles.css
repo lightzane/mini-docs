@@ -42,3 +42,8 @@ button {
     padding: .3rem;
     border-radius: .2rem;
 }
+
+.marked-list blockquote p {
+    border-left: 5px solid #3498db;
+    padding: .2rem 1rem;
+}
