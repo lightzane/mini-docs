@@ -5,10 +5,10 @@ authors:
   - name: Jane Doe
     title: Software Engineer
 published_date: OCT 5 2022 09:35 UTC+8
-tags: [author, multiple, inline]
+tags: [mini-docs, author, multiple, inline]
 ---
 
-# Sample Date Authors
+# Mini Docs - Sample Date Authors
 
 The **Authors** is written here as **inline** and **array**
 

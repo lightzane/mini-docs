@@ -26,6 +26,7 @@ button {
     border-radius: .2rem;
     padding: 1rem;
     padding-top: 0;
+    overflow-x: auto;
 }
 
 .marked-list pre {
@@ -33,11 +34,16 @@ button {
     border-radius: .2rem;
 }
 
+.marked-list pre code {
+    font-size: 1rem;
+}
+
 .marked-list p {
     line-height: 1.5rem;
 }
 
-.marked-list p > code {
+.marked-list p > code,
+.marked-list li > code {
     background-color: #e8e9ec;
     padding: .3rem;
     border-radius: .2rem;
@@ -46,4 +52,12 @@ button {
 .marked-list blockquote p {
     border-left: 5px solid #3498db;
     padding: .2rem 1rem;
+}
+
+.marked-list .table-of-content a {
+    text-decoration: none;
+}
+
+.marked-list .table-of-content a:hover {
+    text-decoration: underline;
 }

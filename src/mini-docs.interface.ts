@@ -1,4 +1,4 @@
-export interface MarkdownDocument {
+export interface MiniDocs {
     content: string;
     /** The very first `#` of the content */
     title: string;
@@ -12,7 +12,7 @@ export interface MarkdownDocument {
 
 /** The Yaml front matter in the markdown */
 export interface Metadata {
-    /** Extracted from `---` the contains `authors` */
+    /** The author */
     authors?: Author[];
     /** @example ['tags-here','another-tag','tag'] */
     tags?: string[];

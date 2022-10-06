@@ -1,4 +1,8 @@
-# Sample Truncate
+---
+tags: [mini-docs]
+---
+
+# Mini Docs - Sample Truncate
 
 Content will be here.
 

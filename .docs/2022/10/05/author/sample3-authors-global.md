@@ -3,7 +3,7 @@ authors: [janedoe, johnsmith]
 tags: [author, global]
 ---
 
-# Global Authors
+# Mini Docs - Global Authors
 
 The **Authors** here is coming from a global `authors.yml`
 
@@ -13,7 +13,7 @@ The **Authors** here is coming from a global `authors.yml`
 
 ```yaml
 authors: [janedoe, johnsmith]
-tags: [author, global]
+tags: [mini-docs, author, global]
 ```
 
 **.docs/authors.yml**

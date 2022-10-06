@@ -1,9 +1,9 @@
 ---
 published_date: OCT 6 2022 07:36 UTC+8
-tags: [sort, published, date]
+tags: [mini-docs, sort, published, date]
 ---
 
-# How items are sorted
+# Mini Docs - How items are sorted out
 
 The items will be sorted out prioritizing the latest `published_date`
 

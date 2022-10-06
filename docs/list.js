@@ -1,12 +1,28 @@
 const list = [
   {
-    "title": "How items are sorted",
-    "content": "<h1 id=\"how-items-are-sorted\">How items are sorted</h1>\n<p>The items will be sorted out prioritizing the latest <code>published_date</code></p>\n<blockquote>\n<p>If there are <strong>no</strong> or <strong>same</strong> <code>published_date</code>, then it will sort based on the file name</p>\n</blockquote>\n",
+    "title": "Mini Docs - About",
+    "content": "<h1 id=\"mini-docs---about\">Mini Docs - About</h1>\n<p><code>mini-docs</code> is a simple static blog generator which you can import in your web application projects.</p>\n<p>After <code>npm install</code>... just do <code>npm start</code> and modify files inside:</p>\n<ul>\n<li><code>.docs</code></li>\n</ul>\n<p>Check <code>./.docs/</code> folder. There will be a list of <code>.md</code> files and <code>authors.yml</code>.</p>\n<blockquote>\n<p>Note: There is a difference between <code>.docs</code> folder and <code>docs</code> folder. <em>Read carefully</em></p>\n</blockquote>\n<p>Then you can check the <code>./docs/list.js</code> and see below interface:</p>\n<pre><code class=\"language-ts\">export interface MiniDocs {\n  content: string;\n  /** The very first `#` of the content */\n  title: string;\n  /** The content to be displayed as preview or summary of a subject */\n  overview: string;\n  /** The yaml front matter which contains other information such as `authors`, `tags`, `published_date` */\n  metadata?: Metadata;\n  /** The remaining content without the `overview` content */\n  truncatedContent: string;\n}\n\n/** The Yaml front matter in the markdown */\nexport interface Metadata {\n  /** The author */\n  authors?: Author[];\n  /** @example [&#39;tags-here&#39;,&#39;another-tag&#39;,&#39;tag&#39;] */\n  tags?: string[];\n  /** @example &quot;OCT 5 2022 09:35 UTC+8&quot;, &quot;2022-10-05 09:35 UTC+8&quot; */\n  published_date?: string;\n}\n\nexport interface Author {\n  name: string;\n  title?: string;\n  image_url?: string;\n}\n</code></pre>\n",
+    "truncatedContent": "<pre><code class=\"language-ts\">export interface MiniDocs {\n  content: string;\n  /** The very first `#` of the content */\n  title: string;\n  /** The content to be displayed as preview or summary of a subject */\n  overview: string;\n  /** The yaml front matter which contains other information such as `authors`, `tags`, `published_date` */\n  metadata?: Metadata;\n  /** The remaining content without the `overview` content */\n  truncatedContent: string;\n}\n\n/** The Yaml front matter in the markdown */\nexport interface Metadata {\n  /** The author */\n  authors?: Author[];\n  /** @example [&#39;tags-here&#39;,&#39;another-tag&#39;,&#39;tag&#39;] */\n  tags?: string[];\n  /** @example &quot;OCT 5 2022 09:35 UTC+8&quot;, &quot;2022-10-05 09:35 UTC+8&quot; */\n  published_date?: string;\n}\n\nexport interface Author {\n  name: string;\n  title?: string;\n  image_url?: string;\n}\n</code></pre>\n",
+    "overview": "<h1 id=\"mini-docs---about\">Mini Docs - About</h1>\n<p><code>mini-docs</code> is a simple static blog generator which you can import in your web application projects.</p>\n<p>After <code>npm install</code>... just do <code>npm start</code> and modify files inside:</p>\n<ul>\n<li><code>.docs</code></li>\n</ul>\n<p>Check <code>./.docs/</code> folder. There will be a list of <code>.md</code> files and <code>authors.yml</code>.</p>\n<blockquote>\n<p>Note: There is a difference between <code>.docs</code> folder and <code>docs</code> folder. <em>Read carefully</em></p>\n</blockquote>\n<p>Then you can check the <code>./docs/list.js</code> and see below interface:</p>\n",
+    "metadata": {
+      "published_date": "OCT 6 2022 14:28 UTC+8",
+      "author": {
+        "name": "Lightzane"
+      },
+      "tags": [
+        "mini-docs"
+      ]
+    }
+  },
+  {
+    "title": "Mini Docs - How items are sorted out",
+    "content": "<h1 id=\"mini-docs---how-items-are-sorted-out\">Mini Docs - How items are sorted out</h1>\n<p>The items will be sorted out prioritizing the latest <code>published_date</code></p>\n<blockquote>\n<p>If there are <strong>no</strong> or <strong>same</strong> <code>published_date</code>, then it will sort based on the file name</p>\n</blockquote>\n",
     "truncatedContent": "<blockquote>\n<p>If there are <strong>no</strong> or <strong>same</strong> <code>published_date</code>, then it will sort based on the file name</p>\n</blockquote>\n",
-    "overview": "<h1 id=\"how-items-are-sorted\">How items are sorted</h1>\n<p>The items will be sorted out prioritizing the latest <code>published_date</code></p>\n",
+    "overview": "<h1 id=\"mini-docs---how-items-are-sorted-out\">Mini Docs - How items are sorted out</h1>\n<p>The items will be sorted out prioritizing the latest <code>published_date</code></p>\n",
     "metadata": {
       "published_date": "OCT 6 2022 07:36 UTC+8",
       "tags": [
+        "mini-docs",
         "sort",
         "published",
         "date"
@@ -27,10 +43,10 @@ const list = [
     }
   },
   {
-    "title": "Sample Date Authors",
-    "content": "<h1 id=\"sample-date-authors\">Sample Date Authors</h1>\n<p>The <strong>Authors</strong> is written here as <strong>inline</strong> and <strong>array</strong></p>\n<p>This will contain Samples for Author And Date</p>\n<p>This is the content.</p>\n<pre><code class=\"language-yaml\">authors:\n  - name: John Smith\n    title: Software Engineer\n  - name: Jane Doe\n    title: Software Engineer\ndate: OCT 5 2022 09:35 UTC+8\n</code></pre>\n",
+    "title": "Mini Docs - Sample Date Authors",
+    "content": "<h1 id=\"mini-docs---sample-date-authors\">Mini Docs - Sample Date Authors</h1>\n<p>The <strong>Authors</strong> is written here as <strong>inline</strong> and <strong>array</strong></p>\n<p>This will contain Samples for Author And Date</p>\n<p>This is the content.</p>\n<pre><code class=\"language-yaml\">authors:\n  - name: John Smith\n    title: Software Engineer\n  - name: Jane Doe\n    title: Software Engineer\ndate: OCT 5 2022 09:35 UTC+8\n</code></pre>\n",
     "truncatedContent": "<p>This will contain Samples for Author And Date</p>\n<p>This is the content.</p>\n<pre><code class=\"language-yaml\">authors:\n  - name: John Smith\n    title: Software Engineer\n  - name: Jane Doe\n    title: Software Engineer\ndate: OCT 5 2022 09:35 UTC+8\n</code></pre>\n",
-    "overview": "<h1 id=\"sample-date-authors\">Sample Date Authors</h1>\n<p>The <strong>Authors</strong> is written here as <strong>inline</strong> and <strong>array</strong></p>\n",
+    "overview": "<h1 id=\"mini-docs---sample-date-authors\">Mini Docs - Sample Date Authors</h1>\n<p>The <strong>Authors</strong> is written here as <strong>inline</strong> and <strong>array</strong></p>\n",
     "metadata": {
       "authors": [
         {
@@ -44,6 +60,7 @@ const list = [
       ],
       "published_date": "OCT 5 2022 09:35 UTC+8",
       "tags": [
+        "mini-docs",
         "author",
         "multiple",
         "inline"
@@ -51,16 +68,17 @@ const list = [
     }
   },
   {
-    "title": "Authors Single Inline",
-    "content": "<h1 id=\"authors-single-inline\">Authors Single Inline</h1>\n<p>This will contain an author <strong>inline</strong> but not an array.</p>\n<pre><code class=\"language-yaml\">authors:\n  name: Lightzane\n  title: Heaven\n</code></pre>\n",
+    "title": "Mini Docs - Authors Single Inline",
+    "content": "<h1 id=\"mini-docs---authors-single-inline\">Mini Docs - Authors Single Inline</h1>\n<p>This will contain an author <strong>inline</strong> but not an array.</p>\n<pre><code class=\"language-yaml\">authors:\n  name: Lightzane\n  title: Heaven\n</code></pre>\n",
     "truncatedContent": "<p>This will contain an author <strong>inline</strong> but not an array.</p>\n<pre><code class=\"language-yaml\">authors:\n  name: Lightzane\n  title: Heaven\n</code></pre>\n",
-    "overview": "<h1 id=\"authors-single-inline\">Authors Single Inline</h1>\n",
+    "overview": "<h1 id=\"mini-docs---authors-single-inline\">Mini Docs - Authors Single Inline</h1>\n",
     "metadata": {
       "authors": {
         "name": "Lightzane",
         "title": "Heaven"
       },
       "tags": [
+        "mini-docs",
         "author",
         "single",
         "inline"
@@ -68,10 +86,10 @@ const list = [
     }
   },
   {
-    "title": "Global Authors",
-    "content": "<h1 id=\"global-authors\">Global Authors</h1>\n<p>The <strong>Authors</strong> here is coming from a global <code>authors.yml</code></p>\n<p><strong>sample.md</strong></p>\n<pre><code class=\"language-yaml\">authors: [janedoe, johnsmith]\ntags: [author, global]\n</code></pre>\n<p><strong>.docs/authors.yml</strong></p>\n<pre><code class=\"language-yml\">johnsmith:\n  name: John Smith\n  title: Software Engineer\n  image_url: https://github.com/lightzane.png\n\njanedoe:\n  name: Jane Doe\n  title: Software Engineer\n  image_url: https://github.com/lightzane.png\n</code></pre>\n",
-    "truncatedContent": "<p><strong>sample.md</strong></p>\n<pre><code class=\"language-yaml\">authors: [janedoe, johnsmith]\ntags: [author, global]\n</code></pre>\n<p><strong>.docs/authors.yml</strong></p>\n<pre><code class=\"language-yml\">johnsmith:\n  name: John Smith\n  title: Software Engineer\n  image_url: https://github.com/lightzane.png\n\njanedoe:\n  name: Jane Doe\n  title: Software Engineer\n  image_url: https://github.com/lightzane.png\n</code></pre>\n",
-    "overview": "<h1 id=\"global-authors\">Global Authors</h1>\n<p>The <strong>Authors</strong> here is coming from a global <code>authors.yml</code></p>\n",
+    "title": "Mini Docs - Global Authors",
+    "content": "<h1 id=\"mini-docs---global-authors\">Mini Docs - Global Authors</h1>\n<p>The <strong>Authors</strong> here is coming from a global <code>authors.yml</code></p>\n<p><strong>sample.md</strong></p>\n<pre><code class=\"language-yaml\">authors: [janedoe, johnsmith]\ntags: [mini-docs, author, global]\n</code></pre>\n<p><strong>.docs/authors.yml</strong></p>\n<pre><code class=\"language-yml\">johnsmith:\n  name: John Smith\n  title: Software Engineer\n  image_url: https://github.com/lightzane.png\n\njanedoe:\n  name: Jane Doe\n  title: Software Engineer\n  image_url: https://github.com/lightzane.png\n</code></pre>\n",
+    "truncatedContent": "<p><strong>sample.md</strong></p>\n<pre><code class=\"language-yaml\">authors: [janedoe, johnsmith]\ntags: [mini-docs, author, global]\n</code></pre>\n<p><strong>.docs/authors.yml</strong></p>\n<pre><code class=\"language-yml\">johnsmith:\n  name: John Smith\n  title: Software Engineer\n  image_url: https://github.com/lightzane.png\n\njanedoe:\n  name: Jane Doe\n  title: Software Engineer\n  image_url: https://github.com/lightzane.png\n</code></pre>\n",
+    "overview": "<h1 id=\"mini-docs---global-authors\">Mini Docs - Global Authors</h1>\n<p>The <strong>Authors</strong> here is coming from a global <code>authors.yml</code></p>\n",
     "metadata": {
       "authors": [
         {
@@ -92,10 +110,15 @@ const list = [
     }
   },
   {
-    "title": "Sample Truncate",
-    "content": "<h1 id=\"sample-truncate\">Sample Truncate</h1>\n<p>Content will be here.</p>\n<p>This content is displayed because there is a truncate below this line.</p>\n<p>This is the content that will be displayed after clicking <code>Read more</code></p>\n<p>The content above the <code>&lt;!-- truncate --&gt;</code> will be displayed as a summary</p>\n",
+    "title": "Mini Docs - Sample Truncate",
+    "content": "<h1 id=\"mini-docs---sample-truncate\">Mini Docs - Sample Truncate</h1>\n<p>Content will be here.</p>\n<p>This content is displayed because there is a truncate below this line.</p>\n<p>This is the content that will be displayed after clicking <code>Read more</code></p>\n<p>The content above the <code>&lt;!-- truncate --&gt;</code> will be displayed as a summary</p>\n",
     "truncatedContent": "<p>This is the content that will be displayed after clicking <code>Read more</code></p>\n<p>The content above the <code>&lt;!-- truncate --&gt;</code> will be displayed as a summary</p>\n",
-    "overview": "<h1 id=\"sample-truncate\">Sample Truncate</h1>\n<p>Content will be here.</p>\n<p>This content is displayed because there is a truncate below this line.</p>\n"
+    "overview": "<h1 id=\"mini-docs---sample-truncate\">Mini Docs - Sample Truncate</h1>\n<p>Content will be here.</p>\n<p>This content is displayed because there is a truncate below this line.</p>\n",
+    "metadata": {
+      "tags": [
+        "mini-docs"
+      ]
+    }
   },
   {
     "title": "Book Title",
@@ -110,35 +133,38 @@ const list = [
   },
   {
     "title": "Book Title - Chapter 1",
-    "content": "<h1 id=\"book-title---chapter-1\">Book Title - Chapter 1</h1>\n<p>This has no <code>published_date</code> so they will be sorted out based on file name.</p>\n<p>Content for chapter 1</p>\n",
-    "truncatedContent": "<p>Content for chapter 1</p>\n",
-    "overview": "<h1 id=\"book-title---chapter-1\">Book Title - Chapter 1</h1>\n<p>This has no <code>published_date</code> so they will be sorted out based on file name.</p>\n",
+    "content": "<h1 id=\"book-title---chapter-1\">Book Title - Chapter 1</h1>\n<p>This has no <code>published_date</code> so they will be sorted out based on file name.</p>\n<p>This also has a <strong>custom</strong> metadata <code>hidden</code> set to true. (Customized to be hidden in the table of content above)</p>\n<p>Content for chapter 1</p>\n<p>We can add custom metadata and can be accessed via <code>MarkdownDocument.metadata</code> field</p>\n",
+    "truncatedContent": "<p>Content for chapter 1</p>\n<p>We can add custom metadata and can be accessed via <code>MarkdownDocument.metadata</code> field</p>\n",
+    "overview": "<h1 id=\"book-title---chapter-1\">Book Title - Chapter 1</h1>\n<p>This has no <code>published_date</code> so they will be sorted out based on file name.</p>\n<p>This also has a <strong>custom</strong> metadata <code>hidden</code> set to true. (Customized to be hidden in the table of content above)</p>\n",
     "metadata": {
       "tags": [
         "book-title"
-      ]
+      ],
+      "hidden": true
     }
   },
   {
     "title": "Page 2",
-    "content": "<h1 id=\"page-2\">Page 2</h1>\n<p>This is the Page 2</p>\n<p>Content for page 2</p>\n",
+    "content": "<h1 id=\"page-2\">Page 2</h1>\n<p>This is the Page 2</p>\n<p>This also has a <strong>custom</strong> metadata <code>hidden</code> set to true. (Customized to be hidden in the table of content above)</p>\n<p>Content for page 2</p>\n",
     "truncatedContent": "<p>Content for page 2</p>\n",
-    "overview": "<h1 id=\"page-2\">Page 2</h1>\n<p>This is the Page 2</p>\n",
+    "overview": "<h1 id=\"page-2\">Page 2</h1>\n<p>This is the Page 2</p>\n<p>This also has a <strong>custom</strong> metadata <code>hidden</code> set to true. (Customized to be hidden in the table of content above)</p>\n",
     "metadata": {
       "tags": [
         "book-title"
-      ]
+      ],
+      "hidden": true
     }
   },
   {
     "title": "Page 3",
-    "content": "<h1 id=\"page-3\">Page 3</h1>\n<p>This is the Page 3 content summary will be here.</p>\n<p>Content for page 3 body content is here</p>\n",
+    "content": "<h1 id=\"page-3\">Page 3</h1>\n<p>This is the Page 3 content summary will be here.</p>\n<p>This also has a <strong>custom</strong> metadata <code>hidden</code> set to true. (Customized to be hidden in the table of content above)</p>\n<p>Content for page 3 body content is here</p>\n",
     "truncatedContent": "<p>Content for page 3 body content is here</p>\n",
-    "overview": "<h1 id=\"page-3\">Page 3</h1>\n<p>This is the Page 3 content summary will be here.</p>\n",
+    "overview": "<h1 id=\"page-3\">Page 3</h1>\n<p>This is the Page 3 content summary will be here.</p>\n<p>This also has a <strong>custom</strong> metadata <code>hidden</code> set to true. (Customized to be hidden in the table of content above)</p>\n",
     "metadata": {
       "tags": [
         "book-title"
-      ]
+      ],
+      "hidden": true
     }
   },
   {

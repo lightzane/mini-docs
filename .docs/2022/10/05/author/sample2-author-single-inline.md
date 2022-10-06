@@ -2,10 +2,10 @@
 authors:
   name: Lightzane
   title: Heaven
-tags: [author, single, inline]
+tags: [mini-docs, author, single, inline]
 ---
 
-# Authors Single Inline
+# Mini Docs - Authors Single Inline
 
 This will contain an author **inline** but not an array.
 

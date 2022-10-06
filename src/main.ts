@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import path from 'path';
 import { marked } from 'marked';
 import jsYaml from 'js-yaml';
-import { Author, MarkdownDocument, Metadata } from './markdown-document.interface';
+import { Author, MiniDocs, Metadata } from './mini-docs.interface';
 import MINI_DOCS_CONFIG from './mini-docs.config.json';
 
 const DIR = MINI_DOCS_CONFIG.docs || 'docs';
@@ -11,7 +11,7 @@ const ASSETS = ['.svg', '.png'];
 ASSETS.push(...MINI_DOCS_CONFIG.assets);
 const copyAssetsToPath = MINI_DOCS_CONFIG.public || './docs';
 const targetFiles: string[] = [];
-const markedDocumentList: MarkdownDocument[] = [];
+const miniDocsList: MiniDocs[] = [];
 const regexTruncate = /<!-- truncate -->/;
 
 type AuthorYaml = { [author: string]: Author; };
@@ -52,7 +52,7 @@ function readThroughDir(nextPath: string): void {
 
 /**
  * Read the content and parse it to HTML.
- * The output will be stored and pushed in `markedDocumentList`
+ * The output will be stored and pushed in `miniDocsList`
  * @param files The markdown filename with paths
  */
 function readAndMark(files: string[]): void {
@@ -60,15 +60,15 @@ function readAndMark(files: string[]): void {
     files.forEach((file) => {
         const fileContent = fs.readFileSync(file, { encoding: 'utf-8' });
         const [metadata, updatedFileContent] = extractFrontMatter(fileContent);
-        console.log('updated', JSON.stringify(updatedFileContent));
-        const markdownDocument: MarkdownDocument = {
+
+        const markdownDocument: MiniDocs = {
             title: getTitle(updatedFileContent),
             content: marked(updatedFileContent.replace(regexTruncate, '')),
             truncatedContent: marked(getTruncatedContent(updatedFileContent).replace(regexTruncate, '')),
             overview: marked(getOverviewContent(updatedFileContent)),
             metadata
         };
-        markedDocumentList.push(markdownDocument);
+        miniDocsList.push(markdownDocument);
     });
 
 }
@@ -78,7 +78,7 @@ function readAndMark(files: string[]): void {
  * @param markdownContent The entire content of the markdown file
  * @returns [`metadata`, `updatedMarkdownContent`] 
  */
-function extractFrontMatter(markdownContent: string): [MarkdownDocument['metadata'] | undefined, string] {
+function extractFrontMatter(markdownContent: string): [Metadata | undefined, string] {
     const delimeter = '---';
     const hasDelimiter = markdownContent.includes(delimeter);
 
@@ -189,7 +189,7 @@ readThroughDir(DIR);
 
 readAndMark(targetFiles);
 
-markedDocumentList.sort((a, b) => {
+miniDocsList.sort((a, b) => {
     // prioritize the one with a published_date
     const prev = +new Date(a.metadata?.published_date || -1);
     const next = +new Date(b.metadata?.published_date || -1);
@@ -197,4 +197,4 @@ markedDocumentList.sort((a, b) => {
     return next - prev;
 });
 
-fs.writeFileSync(`./docs/list.js`, `const list = ${JSON.stringify(markedDocumentList, null, 2)}\n`, { encoding: 'utf-8' });
+fs.writeFileSync(`./docs/list.js`, `const list = ${JSON.stringify(miniDocsList, null, 2)}\n`, { encoding: 'utf-8' });
