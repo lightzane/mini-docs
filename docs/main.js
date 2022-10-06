@@ -1,70 +1,155 @@
 const root = document.getElementById('root');
+const tocWrapper = document.createElement('div');
+const toc = document.createElement('ol');
+const tagWrapper = document.createElement('div');
 
-const titles = [];
+tocWrapper.classList.add('marked-list');
+toc.classList.add('table-of-content');
+tagWrapper.classList.add('tags-list');
+
+tocWrapper.innerHTML = '<h1>Table of Content</h1>';
+
+root.append(tagWrapper);
+root.append(tocWrapper);
+
+let titles = [];
+const tags = [];
+// list is coming from 'list.js'
+const mainlist = list;
+let filtered = mainlist;
+
+let selectedTag = '';
+
+// list is coming from 'list.js'
+list.forEach((item) => {
+    if (item.metadata?.tags?.length) {
+        item.metadata.tags.forEach((tag) => {
+            if (!tags.includes(tag.toLowerCase())) {
+                tags.unshift(tag.toLowerCase());
+            }
+        });
+    }
+});
+
+
+
+// ================================================================
+// * Tags
+// ================================================================
+
+tags.forEach((tag) => {
+
+    const span = document.createElement('span');
+    span.innerText = tag;
+    span.classList.add('tags');
+    tagWrapper.prepend(span);
+    span.onclick = () => {
+        // reset other spans
+        const spans = document.querySelectorAll('.tags');
+        spans.forEach(span => span.classList.remove('selected'));
+
+        // update the view
+        if (selectedTag === tag.toLowerCase()) {
+            displayItems();
+            span.classList.remove('selected');
+            selectedTag = '';
+        } else {
+            selectedTag = tag.toLowerCase();
+            displayItems(tag);
+            span.classList.add('selected');
+        }
+    };
+});
+
+
+// ================================================================
+// * Table of Content
+// ================================================================
+
+function displayToc() {
+
+    toc.innerHTML = '';
+    titles = [];
+
+    filtered.forEach(item => {
+        if (!item.metadata?.hidden) {
+            titles.push(item.title);
+        }
+    });
+
+    titles.forEach((title) => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = `#${title.toLowerCase().replace(/\s/g, '-')}`;
+        a.innerText = title;
+        li.append(a);
+        toc.append(li);
+    });
+
+    tocWrapper.append(toc);
+
+}
 
 // ================================================================
 // * Main Items
 // ================================================================
 
-list.forEach(item => {
-    const div = document.createElement('div');
-    const mid = document.createElement('div');
-    const btn = document.createElement('button');
-    const end = document.createElement('p');
+function displayItems(tag) {
 
-    if (!item.metadata?.hidden) {
-        titles.push(item.title);
+    const mainItem = document.querySelectorAll('.main-item');
+
+    if (mainItem) {
+        mainItem.forEach(item => item.remove());
     }
 
-    div.classList.add('marked-list');
-    mid.innerHTML = item.overview;
+    filtered = !tag ? list : mainlist.filter(i => i.metadata?.tags?.includes(tag.toLowerCase()));
 
-    btn.innerText = 'Read more';
-    btn.onclick = () => {
-        mid.innerHTML += item.truncatedContent;
-        hljs.highlightAll();
-        btn.hidden = true;
-    };
+    filtered.forEach(item => {
+        const div = document.createElement('div');
+        const mid = document.createElement('div');
+        const btn = document.createElement('button');
+        const end = document.createElement('p');
 
-    if (item.metadata?.authors?.length) {
-        const authors = [];
-        item.metadata.authors.forEach(author => {
-            authors.push(author.name);
-        });
-        end.innerText = 'Authors: ' + JSON.stringify(authors);
-    }
+        div.classList.add('marked-list');
+        div.classList.add('main-item');
 
-    end.innerHTML += '<br>Published Date: ' + (item.metadata?.published_date || '--');
+        mid.innerHTML = item.overview;
 
-    if (item.metadata?.tags?.length) {
-        end.innerHTML += '<br>Tags: ' + JSON.stringify(item.metadata.tags);
-    }
+        btn.innerText = 'Read more';
+        btn.onclick = () => {
+            mid.innerHTML += item.truncatedContent;
+            hljs.highlightAll();
+            btn.hidden = true;
+        };
 
-    div.append(mid);
-    div.append(btn);
-    div.append(end);
+        if (item.metadata?.authors?.length) {
+            const authors = [];
+            item.metadata.authors.forEach(author => {
+                authors.push(author.name);
+            });
+            end.innerText = 'Authors: ' + JSON.stringify(authors);
+        }
 
-    root.append(div);
-});
+        end.innerHTML += '<br>Published Date: ' + (item.metadata?.published_date || '--');
 
-// ================================================================
-// * Table of Content
-// ================================================================
-const tocWrapper = document.createElement('div');
-const toc = document.createElement('ol');
+        if (item.metadata?.tags?.length) {
+            end.innerHTML += '<br><br>';
+            item.metadata?.tags?.forEach((tag) => {
+                const span = document.createElement('span');
+                span.classList.add('tag');
+                span.innerText = tag;
+                end.append(span);
+            });
+        }
 
-tocWrapper.classList.add('marked-list');
-toc.classList.add('table-of-content');
+        div.append(mid);
+        div.append(btn);
+        div.append(end);
 
-titles.forEach((title) => {
-    const li = document.createElement('li');
-    const a = document.createElement('a');
-    a.href = `#${title.toLowerCase().replace(/\s/g, '-')}`;
-    a.innerText = title;
-    li.append(a);
-    toc.append(li);
-});
+        root.append(div);
+    });
 
-tocWrapper.append(toc);
+    displayToc();
+}
 
-root.prepend(tocWrapper);
+displayItems();

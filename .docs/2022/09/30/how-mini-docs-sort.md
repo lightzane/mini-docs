@@ -1,6 +1,6 @@
 ---
 published_date: OCT 6 2022 07:36 UTC+8
-tags: [mini-docs, sort, published, date]
+tags: [mini-docs, sort]
 ---
 
 # Mini Docs - How items are sorted out

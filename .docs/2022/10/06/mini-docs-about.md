@@ -13,7 +13,7 @@ After `npm install`... just do `npm start` and modify files inside:
 
 - `.docs`
 
-Check `./.docs/` folder. There will be a list of `.md` files and `authors.yml`.
+Check `./.docs/` folder for all the content. There will be a list of `.md` files and `authors.yml`.
 
 > Note: There is a difference between `.docs` folder and `docs` folder. _Read carefully_
 

@@ -16,10 +16,51 @@ button {
     font-weight: bold;
 }
 
+div {
+    word-wrap: break-word;
+}
 
+/* not related to `marked`js */
+.marked-list .table-of-content a {
+    text-decoration: none;
+}
 
+.marked-list .table-of-content a:hover {
+    text-decoration: underline;
+}
 
-/* add styles for the output from `marked` */
+.tags-list {
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.tags-list .tags, 
+.tag {
+    padding: .2rem 1rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(0,0,0,.37);
+    margin-right: .3rem;
+    margin-bottom: .3rem;
+    display: inline-block;
+    font-size: .8rem;
+}
+
+.tags-list .tags {
+    cursor: pointer;
+}
+
+.tags-list .tags.selected {
+    color: #fff;
+    font-weight: bold;
+    background-color: #3498db !important;
+    border-color: #3498db;
+}
+
+.tags-list .tags:hover {
+    background-color: rgba(0,0,0,.1);
+}
+
+/* add styles for the output from `marked`js */
 .marked-list {
     border: 1px solid #ccc;
     margin-bottom: 1rem;
@@ -52,12 +93,4 @@ button {
 .marked-list blockquote p {
     border-left: 5px solid #3498db;
     padding: .2rem 1rem;
-}
-
-.marked-list .table-of-content a {
-    text-decoration: none;
-}
-
-.marked-list .table-of-content a:hover {
-    text-decoration: underline;
 }

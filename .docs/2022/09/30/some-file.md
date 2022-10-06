@@ -1,6 +1,6 @@
 ---
 published_date: OCT 6 2022 07:36 UTC+8
-tags: [angular, angular-readme]
+tags: [angular-readme]
 ---
 
 # Some File
