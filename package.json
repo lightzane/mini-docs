@@ -2,9 +2,11 @@
   "name": "mini-docs",
   "version": "0.1.0",
   "description": "This is to get and prepare all markdown files for web",
-  "main": "index.js",
   "scripts": {
-    "start": "nodemon src/main.ts"
+    "start": "npm run generate && npm run copy-assets",
+    "build": "tsc --project src/tsconfig.json",
+    "generate": "ts-node src/main.ts",
+    "copy-assets": "ts-node src/copy.ts"
   },
   "keywords": [],
   "author": "",

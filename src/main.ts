@@ -2,20 +2,36 @@ import * as fs from 'fs';
 import path from 'path';
 import { marked } from 'marked';
 import jsYaml from 'js-yaml';
-import { Author, MiniDocs, Metadata } from './mini-docs.interface';
+import { Author, MiniDocs, Metadata } from './mini-docs';
 import MINI_DOCS_CONFIG from './mini-docs.config.json';
 
-const DIR = MINI_DOCS_CONFIG.docs || 'docs';
+/** The generated file in which all the markdown documents are listed as `mini-docs` */
+const outputFilename = MINI_DOCS_CONFIG?.output || 'list.ts';
+
+const outputDir = MINI_DOCS_CONFIG?.public || 'public';
+
+/** The main directory in which all the markdown documents / authors.yml is located */
+const DIR = MINI_DOCS_CONFIG?.docs || 'docs';
+
+/** The extension of the file to look for and treated as a markdown document */
 const MD = '.md';
-const ASSETS = ['.svg', '.png'];
-ASSETS.push(...MINI_DOCS_CONFIG.assets);
-const copyAssetsToPath = MINI_DOCS_CONFIG.public || './docs';
+
+// const ASSETS = ['.svg', '.png'];
+// ASSETS.push(...MINI_DOCS_CONFIG.assets);
+// const copyAssetsToPath = MINI_DOCS_CONFIG.public || './docs';
+
+/** The list of all identified candidates for markdown documents */
 const targetFiles: string[] = [];
+
+/** The list of prod-ready `mini-docs` */
 const miniDocsList: MiniDocs[] = [];
+
 const regexTruncate = /<!-- truncate -->/;
 
 type AuthorYaml = { [author: string]: Author; };
+
 let globalAuthors: AuthorYaml | undefined;
+
 try {
     globalAuthors = jsYaml.load(fs.readFileSync(`${DIR}/authors.yml`, { encoding: 'utf-8' })) as AuthorYaml;
 }
@@ -41,10 +57,10 @@ function readThroughDir(nextPath: string): void {
             targetFiles.push(next);
         }
 
-        // * Copy assets
-        else if (ASSETS.includes(path.extname(file).toLowerCase())) {
-            fs.copyFileSync(next, `${copyAssetsToPath}/${file}`);
-        }
+        //// Copy assets
+        // else if (ASSETS.includes(path.extname(file).toLowerCase())) {
+        //     fs.copyFileSync(next, `${copyAssetsToPath}/${file}`);
+        // }
 
     });
 
@@ -197,4 +213,6 @@ miniDocsList.sort((a, b) => {
     return next - prev;
 });
 
-fs.writeFileSync(`./docs/list.js`, `const list = ${JSON.stringify(miniDocsList, null, 2)}\n`, { encoding: 'utf-8' });
+const addExport = outputFilename.includes('.ts') ? 'export ' : '';
+
+fs.writeFileSync(`./${outputDir}/${outputFilename}`, `${addExport}const miniDocsList = ${JSON.stringify(miniDocsList, null, 2)}\n`, { encoding: 'utf-8' });

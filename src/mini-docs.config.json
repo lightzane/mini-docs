@@ -1,7 +1,6 @@
 {
-    "docs": ".docs",
-    "assets": [
-        ".webp"
-    ],
-    "public": "docs"
+  "docs": ".docs",
+  "assets": [".webp"],
+  "public": "docs",
+  "output": "list.js"
 }

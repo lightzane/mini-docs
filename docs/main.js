@@ -14,14 +14,14 @@ root.append(tocWrapper);
 
 let titles = [];
 const tags = [];
-// list is coming from 'list.js'
-const mainlist = list;
+// miniDocsList is coming from 'list.js'
+const mainlist = miniDocsList;
 let filtered = mainlist;
 
 let selectedTag = '';
 
 // list is coming from 'list.js'
-list.forEach((item) => {
+miniDocsList.forEach((item) => {
     if (item.metadata?.tags?.length) {
         item.metadata.tags.forEach((tag) => {
             if (!tags.includes(tag.toLowerCase())) {
@@ -102,7 +102,7 @@ function displayItems(tag) {
         mainItem.forEach(item => item.remove());
     }
 
-    filtered = !tag ? list : mainlist.filter(i => i.metadata?.tags?.includes(tag.toLowerCase()));
+    filtered = !tag ? miniDocsList : mainlist.filter(i => i.metadata?.tags?.includes(tag.toLowerCase()));
 
     filtered.forEach(item => {
         const div = document.createElement('div');
