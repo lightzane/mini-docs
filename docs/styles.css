@@ -60,6 +60,10 @@ div {
     background-color: rgba(0,0,0,.1);
 }
 
+.time {
+    color: red;
+}
+
 /* add styles for the output from `marked`js */
 .marked-list {
     border: 1px solid #ccc;

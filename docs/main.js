@@ -31,8 +31,6 @@ miniDocsList.forEach((item) => {
     }
 });
 
-
-
 // ================================================================
 // * Tags
 // ================================================================
@@ -113,7 +111,9 @@ function displayItems(tag) {
         div.classList.add('marked-list');
         div.classList.add('main-item');
 
-        mid.innerHTML = item.overview;
+        mid.innerHTML = item.markedTitle;
+        mid.innerHTML += `<p class="time"><em>${item.timeToRead}</em></p>`;
+        mid.innerHTML += item.overview;
 
         btn.innerText = 'Read more';
         btn.onclick = () => {
@@ -131,6 +131,11 @@ function displayItems(tag) {
         }
 
         end.innerHTML += '<br>Published Date: ' + (item.metadata?.published_date || '--');
+
+        const lastUpdatedDate = item.metadata?.custom_last_updated;
+        if (lastUpdatedDate) {
+            end.innerHTML += '<br>Last Updated Date: ' + lastUpdatedDate;
+        }
 
         if (item.metadata?.tags?.length) {
             end.innerHTML += '<br><br>';

@@ -8,7 +8,11 @@ import MINI_DOCS_CONFIG from './mini-docs.config.json';
 /** The generated file in which all the markdown documents are listed as `mini-docs` */
 const outputFilename = MINI_DOCS_CONFIG?.output || 'list.ts';
 
+/** The directory in which the output and assests are pasted */
 const outputDir = MINI_DOCS_CONFIG?.public || 'public';
+
+/** The average `wpm` of a person to read */
+const WPM = MINI_DOCS_CONFIG?.wpm || 220;
 
 /** The main directory in which all the markdown documents / authors.yml is located */
 const DIR = MINI_DOCS_CONFIG?.docs || 'docs';
@@ -76,17 +80,28 @@ function readAndMark(files: string[]): void {
     files.forEach((file) => {
         const fileContent = fs.readFileSync(file, { encoding: 'utf-8' });
         const [metadata, updatedFileContent] = extractFrontMatter(fileContent);
+        const title = getTitle(updatedFileContent);
 
         const markdownDocument: MiniDocs = {
-            title: getTitle(updatedFileContent),
+            title,
+            markedTitle: marked(`# ${title}`),
+            timeToRead: getTimeToRead(updatedFileContent),
             content: marked(updatedFileContent.replace(regexTruncate, '')),
             truncatedContent: marked(getTruncatedContent(updatedFileContent).replace(regexTruncate, '')),
-            overview: marked(getOverviewContent(updatedFileContent)),
+            titleOverview: marked(getOverviewContent(updatedFileContent)),
+            overview: marked(getOverviewWithoutTitle(updatedFileContent)),
             metadata
         };
         miniDocsList.push(markdownDocument);
     });
 
+}
+
+/** Calculate time to read in minutes */
+function getTimeToRead(content: string): string {
+    const words = content.trim().split(/s+/).length;
+    const time = Math.ceil(words / WPM);
+    return `${time} min read`;
 }
 
 /**
@@ -108,7 +123,7 @@ function extractFrontMatter(markdownContent: string): [Metadata | undefined, str
 
     const updatedMarkdownContent =
         markdownContent
-            .substring(end + spaceAllowance).trimStart();
+            .substring(end + spaceAllowance).trimStart(); // trim to remove the extra \r\n 
 
     let yaml = markdownContent.substring(start, end);
 
@@ -164,7 +179,7 @@ function injectAuthors(authors: Author[]): void {
     }
 }
 
-/** Retrieve the title from the first `#` in the content */
+/** Retrieve the title from the first `#` in the content without the `#` */
 function getTitle(markdownContent: string): string {
     const [title] = /#.*/.exec(markdownContent) || ['# Untitled'];
     return title.replace(/.*#\s*/, '');
@@ -185,6 +200,26 @@ function getOverviewContent(markdownContent: string): string {
     return overview;
 }
 
+/** Gets the summary of the content (excluding the title) until truncate is found. */
+function getOverviewWithoutTitle(markdownContent: string): string {
+
+    let overview = '';
+
+    const truncateMatches = regexTruncate.exec(markdownContent);
+
+    if (markdownContent && truncateMatches?.length) {
+        const truncateIndex = truncateMatches.index;
+        overview = markdownContent.substring(0, truncateIndex);
+        const lines = overview.split('\n');
+        lines.splice(0, 1); // delete the first line
+        overview = lines.join('\n');
+    }
+
+    return overview;
+
+}
+
+/** Gets the remaining content after the summary has been truncated. */
 function getTruncatedContent(markdownContent: string): string {
     let content = markdownContent;
 

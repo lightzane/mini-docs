@@ -2,5 +2,6 @@
   "docs": ".docs",
   "assets": [".webp"],
   "public": "docs",
-  "output": "list.js"
+  "output": "list.js",
+  "wpm": 200
 }
