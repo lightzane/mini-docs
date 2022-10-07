@@ -31,8 +31,6 @@ export interface MiniDocs {
   markedTitle: string;
   /** The calculated time to read in minutes. Returns: `time` min read */
   timeToRead: string;
-  /** The content to be displayed as preview or summary of a subject */
-  titleOverview: string;
   /** The content (excluding title) to be displayed as preview or summary of a subject */
   overview: string;
   /** The yaml front matter which contains other information such as `authors`, `tags`, `published_date`, and other custom fields */

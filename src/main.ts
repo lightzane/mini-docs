@@ -20,10 +20,6 @@ const DIR = MINI_DOCS_CONFIG?.docs || 'docs';
 /** The extension of the file to look for and treated as a markdown document */
 const MD = '.md';
 
-// const ASSETS = ['.svg', '.png'];
-// ASSETS.push(...MINI_DOCS_CONFIG.assets);
-// const copyAssetsToPath = MINI_DOCS_CONFIG.public || './docs';
-
 /** The list of all identified candidates for markdown documents */
 const targetFiles: string[] = [];
 
@@ -61,11 +57,6 @@ function readThroughDir(nextPath: string): void {
             targetFiles.push(next);
         }
 
-        //// Copy assets
-        // else if (ASSETS.includes(path.extname(file).toLowerCase())) {
-        //     fs.copyFileSync(next, `${copyAssetsToPath}/${file}`);
-        // }
-
     });
 
 }
@@ -88,8 +79,7 @@ function readAndMark(files: string[]): void {
             timeToRead: getTimeToRead(updatedFileContent),
             content: marked(updatedFileContent.replace(regexTruncate, '')),
             truncatedContent: marked(getTruncatedContent(updatedFileContent).replace(regexTruncate, '')),
-            titleOverview: marked(getOverviewContent(updatedFileContent)),
-            overview: marked(getOverviewWithoutTitle(updatedFileContent)),
+            overview: marked(getOverviewContent(updatedFileContent)),
             metadata
         };
         miniDocsList.push(markdownDocument);
@@ -185,23 +175,8 @@ function getTitle(markdownContent: string): string {
     return title.replace(/.*#\s*/, '');
 }
 
-/** Gets the summary of the content until truncate is found. Else will return the title */
-function getOverviewContent(markdownContent: string): string {
-
-    let overview = `# ${getTitle(markdownContent)}`;
-
-    const truncateMatches = regexTruncate.exec(markdownContent);
-
-    if (markdownContent && truncateMatches?.length) {
-        const truncateIndex = truncateMatches.index;
-        overview = markdownContent.substring(0, truncateIndex);
-    }
-
-    return overview;
-}
-
 /** Gets the summary of the content (excluding the title) until truncate is found. */
-function getOverviewWithoutTitle(markdownContent: string): string {
+function getOverviewContent(markdownContent: string): string {
 
     let overview = '';
 
